@@ -1,8 +1,10 @@
 import pytest
 import allure
 import os
+import requests
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
 from datetime import datetime
 
 @pytest.mark.usefixtures("setup")
@@ -27,3 +29,23 @@ class BaseClass:
         if attach:
             allure.attach(log, attachment_type=allure.attachment_type.TEXT)
         return log
+    
+    def get_element(self, element):
+        return self.driver.find_element(*element)
+    
+    def get_element_click(self, element):
+        return self.driver.find_element(*element).click()
+    
+    def get_element_send_key(self, element, inputs):
+        return self.driver.find_element(*element).send_keys(inputs)
+    
+    def get_select_element_by_visible_text(self, element, text):
+        return Select(self.driver.find_element(*element)).select_by_visible_text(text)
+    
+    def get_select_element_by_value(self, element, value):
+        return Select(self.driver.find_element(*element)).select_by_value(value)
+    
+    def get_fake_user(self):
+        response = requests.get("https://randomuser.me/api/")
+        user = response.json()["results"][0]
+        return user
