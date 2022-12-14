@@ -1,4 +1,3 @@
-from datetime import datetime
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -30,7 +29,7 @@ def setup(request):
         driver = webdriver.Chrome(service=ChromeService(
             ChromeDriverManager().install()))
 
-    driver.get("")
+    driver.get("https://www.verndale.com/")
     driver.maximize_window()
        
     request.cls.driver = driver
