@@ -1,6 +1,6 @@
 import pytest
 import allure
-from utilities.base_class import BaseClass
+from core.base_class import BaseClass
 from objects.components.header import Header
 
 class TestHeader(BaseClass):
