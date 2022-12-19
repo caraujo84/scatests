@@ -1,13 +1,19 @@
 import allure
 import pytest
 from selenium.webdriver.common.by import By
-from utilities.base_class import BaseClass
+from core.base_class import BaseClass
 from objects.pages.home_page import HomePage
 from objects.pages.log_in import LogIn
 from objects.pages.profile_selection import ProfileSelection
 
 class TestFlowRegister(BaseClass):
         
+    def manual_init(self, driver):
+        self.driver = driver
+        self.home = HomePage(driver)
+        self.login = LogIn(driver)
+        self.profile = ProfileSelection(driver)
+
     @pytest.fixture
     def initialize_objects(self):
         self.home = HomePage(self.driver)
@@ -18,7 +24,6 @@ class TestFlowRegister(BaseClass):
     def test_register_flow(self, initialize_objects, user = None, review_name = False):
         
         log = self.get_logger()
-        user = self.get_fake_user()
         error_count = 0
         user = user if user != None else self.get_fake_user()
         log.info('Start register a user')

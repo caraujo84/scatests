@@ -1,14 +1,14 @@
 import allure
 import pytest
 from selenium.webdriver.common.by import By
-from utilities.base_class import BaseClass
+from core.base_class import BaseClass
 from objects.pages.log_in import LogIn
 from objects.pages.home_page import HomePage
 from objects.pages.profile_selection import ProfileSelection
 from tests.test_components.test_footer import TestFooter
 from tests.test_flows.test_flow_register import TestFlowRegister
 
-class TestFlowSubscribeLogin(BaseClass):
+class TestSuiteSubscribeLogin(BaseClass):
     
     @pytest.fixture
     def initialize_objects(self):
@@ -17,7 +17,7 @@ class TestFlowSubscribeLogin(BaseClass):
         self.profile = ProfileSelection(self.driver)
         
     
-    @allure.story('subscribe_login_flow')
+    @allure.epic('subscribe_login_suite')
     def test_subscribe_login(self, initialize_objects):
         
         log = self.get_logger()
@@ -27,7 +27,10 @@ class TestFlowSubscribeLogin(BaseClass):
         user = self.get_fake_user()
         log.info("Test Subscribe")
         test_footer = TestFooter()
-        test_footer.test_footer_subscribe_form(user)
+        test_footer.manual_init(self.driver)
+        test_footer.test_footer_subscribe_form(None, user)
         log.info("Test Register")
-        TestFlowRegister.test_register_flow(self, TestFlowRegister.initialize_objects, user , review_name = True)
+        test_flow_register = TestFlowRegister()
+        test_flow_register.manual_init(self.driver)
+        test_flow_register.test_register_flow(None, user , True)
         
