@@ -7,21 +7,22 @@ from objects.pages.log_in import LogIn
 from objects.pages.profile_selection import ProfileSelection
 
 class TestFlowRegister(BaseClass):
-        
-    def manual_init(self, driver):
-        self.driver = driver
-        self.home = HomePage(driver)
-        self.login = LogIn(driver)
-        self.profile = ProfileSelection(driver)
 
-    @pytest.fixture
     def initialize_objects(self):
         self.home = HomePage(self.driver)
         self.login = LogIn(self.driver)
         self.profile = ProfileSelection(self.driver)
         
+    def manual_init(self, driver):
+        self.driver = driver
+        self.initialize_objects()
+
+    @pytest.fixture
+    def auto_init(self):
+        self.initialize_objects()
+        
     @allure.story('register_flow')
-    def test_register_flow(self, initialize_objects, user = None, review_name = False):
+    def test_register_flow(self, auto_init, user = None, review_name = False):
         
         log = self.get_logger()
         error_count = 0

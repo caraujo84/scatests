@@ -4,17 +4,20 @@ from core.base_class import BaseClass
 from objects.components.footer import Footer
 
 class TestFooter(BaseClass):
-    
-    def manual_init(self, driver):
-        self.driver = driver
-        self.footer = Footer(driver)
-        
-    @pytest.fixture
+
     def initialize_objects(self):
         self.footer = Footer(self.driver)
     
+    def manual_init(self, driver):
+        self.driver = driver
+        self.initialize_objects()
+        
+    @pytest.fixture
+    def auto_init(self):
+        self.initialize_objects()
+    
     @allure.feature('footer')
-    def test_footer_subscribe_form(self, initialize_objects, user = None):
+    def test_footer_subscribe_form(self, auto_init, user = None):
         
         log = self.get_logger()
         error_count = 0
@@ -40,5 +43,6 @@ class TestFooter(BaseClass):
         else:
             log.info(f'Subscribe message is correct')
             
+        log.attach_log()
         if (error_count > 0):
             pytest.fail(f'There where {error_count} errors!')
