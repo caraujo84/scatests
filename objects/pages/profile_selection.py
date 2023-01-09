@@ -17,6 +17,6 @@ class ProfileSelection():
     homeowner_radio_buttons = (By.XPATH, '/html/body/main/dialog[1]/div/form/div[5]/div/div')
     submit_btn = (By.XPATH, '/html/body/main/dialog[1]/div/form/button[1]')
     thank_you_ok_btn = (By.XPATH, '//*[@id="thankYouModal"]/div/div/button')
-    profiles_container = (By.XPATH, '/html/body/main/div[2]/div/div[2]')
+    profiles_container = (By.XPATH, '/html/body/main/div[2]/div/div[2]') 
     profile_two = (By.XPATH, '/html/body/main/div[2]/div/div[2]/button[2]')
     choose_profile_btn = (By.XPATH, '//*[@id="312"]/div/div[1]/div[1]/div[2]/button[1]')
