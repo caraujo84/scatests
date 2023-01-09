@@ -19,5 +19,9 @@ class Logger():
     def error(self, new_log):
         self.log += self.add_log('<span style="color:#ef5350;">ERROR</span>', new_log)
 
+    def clear_log(self):
+        self.log = ''
+
     def attach_log(self):
         allure.attach(self.log, name="log", attachment_type=allure.attachment_type.HTML)
+        self.clear_log()
