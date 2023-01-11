@@ -20,15 +20,16 @@ class TestHeader(BaseClass):
     def test_header_menu(self, auto_init):
 
         log = self.get_logger()
-        screen = self.get_screenshot()
+        simple_actions = self.get_simple_actions()
+        screen_utils = self.get_screenshot_utils()
         error_count = 0
         
         menu_expected_titles = ['Personal', 'Business', 'Articles', 'Locations']
         menu_actual_titles = [
-            self.get_element(self.header.menu_personal_item).text,
-            self.get_element(self.header.menu_business_item).text,
-            self.get_element(self.header.menu_articles_item).text,
-            self.get_element(self.header.menu_locations_item).text,
+            simple_actions.get_element(self.header.menu_personal_item).text,
+            simple_actions.get_element(self.header.menu_business_item).text,
+            simple_actions.get_element(self.header.menu_articles_item).text,
+            simple_actions.get_element(self.header.menu_locations_item).text,
         ]
 
         log.info('Start reviewing header menu titles')
@@ -37,7 +38,7 @@ class TestHeader(BaseClass):
             if (expected_title != actual_title):
                 log.error(f'"{actual_title}" title is incorrect')
                 log.warning(f'Expected Title "{expected_title}"')
-                screen.add_screenshot('test_header_menu', expected_title)
+                screen_utils.add_screenshot('test_header_menu', expected_title)
                 error_count += 1
             else:
                 log.info(f'{expected_title} title text is correct')

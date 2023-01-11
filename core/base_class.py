@@ -12,9 +12,9 @@ from selenium.webdriver.common.by import By
 class BaseClass:
     
     def get_wait_utils(self):
-        return WaitEvents()
+        return WaitEvents(self.driver)
     
-    def get_screenshot(self):
+    def get_screenshot_utils(self):
         return ScreenshotsReports()
 
     def get_logger(self):
@@ -26,8 +26,11 @@ class BaseClass:
     def get_select_actions(self):
         return SelectActions()
     
-    def get_random_action(self):
+    def get_random_actions(self):
         return RandomActions()
+
+    def get_fake_user_utils(self):
+        return FakeUser()
     
     def check_images_attributes(self, element, attribute, text):
         """
@@ -41,8 +44,4 @@ class BaseClass:
             if img_attribute != text:
                 list = [images]
         return list
-                
-        
-    def get_fake_user(self):
-        return FakeUser
     

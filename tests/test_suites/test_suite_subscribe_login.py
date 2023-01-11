@@ -26,8 +26,10 @@ class TestSuiteSubscribeLogin(BaseClass):
     def test_subscribe_login(self, auto_init):
         
         log = self.get_logger()
+        fake_user_utils = self.get_fake_user_utils()
+
         log.info("Create fake user")
-        user = self.get_fake_user()
+        user = fake_user_utils.get_fake_user()
         log.info("Test Subscribe")
         self.test_footer.test_footer_subscribe_form(None, user)
         log.info("Test Register")

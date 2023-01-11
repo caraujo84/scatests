@@ -29,7 +29,7 @@ def setup(request):
         driver = webdriver.Chrome(service=ChromeService(
             ChromeDriverManager().install()))
 
-    driver.get("https://verndale-optidemo-prod.azurewebsites.net/")
+    driver.get("https://infinitybank-optimizely.verndale.com/")
     driver.maximize_window()
        
     request.cls.driver = driver
