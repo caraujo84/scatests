@@ -20,6 +20,7 @@ class TestHeader(BaseClass):
     def test_header_menu(self, auto_init):
 
         log = self.get_logger()
+        screen = self.get_screenshot()
         error_count = 0
         
         menu_expected_titles = ['Personal', 'Business', 'Articles', 'Locations']
@@ -36,7 +37,7 @@ class TestHeader(BaseClass):
             if (expected_title != actual_title):
                 log.error(f'"{actual_title}" title is incorrect')
                 log.warning(f'Expected Title "{expected_title}"')
-                self.add_screenshot('test_header_menu', expected_title)
+                screen.add_screenshot('test_header_menu', expected_title)
                 error_count += 1
             else:
                 log.info(f'{expected_title} title text is correct')

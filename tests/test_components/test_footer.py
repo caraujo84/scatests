@@ -20,11 +20,13 @@ class TestFooter(BaseClass):
     def test_footer_subscribe_form(self, auto_init, user = None):
         
         log = self.get_logger()
+        wait = self.get_wait_utils()
+        screen = self.get_screenshot()
         error_count = 0
         user = user if user != None else self.get_fake_user()
         
         log.info('Start subscribe a user')
-        self.wait_element(self.footer.input_name)
+        wait.wait_element(self.footer.input_name)
         self.element_send_key(self.footer.input_name, user.first_name)
         self.element_send_key(self.footer.input_last_name, user.last_name)
         self.element_send_key(self.footer.input_email, user.email)
@@ -32,13 +34,13 @@ class TestFooter(BaseClass):
         log.info(f'User last name: {user.last_name}')
         log.info(f'User email: {user.email}')
         self.element_click(self.footer.submit_btn)
-        self.wait_element(self.footer.correct_message)
+        wait.wait_element(self.footer.correct_message)
         actual_message = self.get_element(self.footer.correct_message).text
         expected_message = 'The form has been submitted successfully.'
         if (actual_message != expected_message):
             log.error(f'"{actual_message}" message is incorrect')
             log.warning(f'Expected message "{expected_message}"')
-            self.add_screenshot('test_footer', 'test_footer')
+            screen.add_screenshot('test_footer', 'test_footer')
             error_count += 1
         else:
             log.info(f'Subscribe message is correct')
