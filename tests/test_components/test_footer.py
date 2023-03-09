@@ -26,7 +26,7 @@ class TestFooter(BaseClass):
         fake_user_utils = self.get_fake_user_utils()
         
         error_count = 0
-        user = user if user != None else fake_user_utils.get_fake_user()
+        user = user if user is not None else fake_user_utils.get_fake_user()
         
         log.info('Start subscribe a user')
         wait_utils.wait_element(self.footer.input_name)
