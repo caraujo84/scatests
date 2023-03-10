@@ -3,14 +3,16 @@ import pytest
 from selenium.webdriver.common.by import By
 from core.base_class import BaseClass
 from objects.pages.home_page import HomePage
-from objects.pages.log_in import LogIn
+from objects.pages.social_sign_in import SocialSignIn
+from objects.pages.login import Login
 from objects.pages.profile_selection import ProfileSelection
 
 class TestFlowRegister(BaseClass):
 
     def initialize_objects(self):
         self.home = HomePage(self.driver)
-        self.login = LogIn(self.driver)
+        self.socialSignIn = SocialSignIn(self.driver)
+        self.login = Login(self.driver)
         self.profile = ProfileSelection(self.driver)
         
     def manual_init(self, driver):
@@ -22,7 +24,7 @@ class TestFlowRegister(BaseClass):
         self.initialize_objects()
         
     @allure.story('register_flow')
-    def test_register_flow(self, auto_init, user = None, review_name = False):
+    def test_register(self, auto_init, user = None, review_name = False):
         
         log = self.get_logger()
         simple_actions = self.get_simple_actions()
@@ -31,6 +33,9 @@ class TestFlowRegister(BaseClass):
         fake_user_utils = self.get_fake_user_utils()
         random_actions_utils = self.get_random_actions()
 
+        custom_utils = self.get_custom_utils()
+        custom_utils.pass_site_protection(log)
+
         error_count = 0
         user = user if user != None else fake_user_utils.get_fake_user()
         
@@ -38,15 +43,21 @@ class TestFlowRegister(BaseClass):
         wait_utils.wait_element(self.home.utility_nav.log_In)
         log.info('Click on Log in link')
         simple_actions.element_click(self.home.utility_nav.log_In)
-        wait_utils.wait_element(self.login.email_input)                            
+        wait_utils.wait_element(self.login.socialSignInBtn)
+        log.info('Login Page Loaded')
+        log.info('Click on Social Sign in Button')
+        simple_actions.element_click(self.login.socialSignInBtn)
+        wait_utils.wait_element(self.socialSignIn.email_input)
+        log.info('Social Sign in Page Loaded')
         log.info(f"Enter email: {user.email}")
-        simple_actions.element_send_key(self.login.email_input, user.email)
+        simple_actions.element_send_key(self.socialSignIn.email_input, user.email)
         log.info(f"Enter password: @Verndale321!")
-        simple_actions.element_send_key(self.login.password_input, "@Verndale321!")
+        simple_actions.element_send_key(self.socialSignIn.password_input, "@Verndale321!")
         log.info("Click login")
-        simple_actions.element_click(self.login.login_btn)
-        wait_utils.wait_element(self.login.continue_btn)
-        continue_btn_text = simple_actions.get_element(self.login.continue_btn).text
+        simple_actions.element_click(self.socialSignIn.login_btn)
+        wait_utils.wait_element(self.socialSignIn.continue_btn)
+        log.info("Permissions Page Loaded")
+        continue_btn_text = simple_actions.get_element(self.socialSignIn.continue_btn).text
         complete_name = f'{user.first_name} {user.last_name}'
         
         if review_name:
@@ -58,10 +69,11 @@ class TestFlowRegister(BaseClass):
             else:
                 log.info(f'{complete_name} name is correct')
                 
-        simple_actions.element_click(self.login.continue_btn)
-        wait_utils.wait_element(self.profile.job_type_select)
-        selected_job_type = random_actions_utils.select_random_option(self.profile.job_type_select)
-        log.info(f"Selected job type: {selected_job_type}")
+        simple_actions.element_click(self.socialSignIn.continue_btn)
+        wait_utils.wait_element(self.profile.employee_status)
+        log.info("Profile Selection Page Loaded")
+        selected_employee_status = random_actions_utils.select_random_option(self.profile.employee_status)
+        log.info(f"Selected employee status: {selected_employee_status}")
         selected_annual_income = random_actions_utils.select_random_option(self.profile.annual_income_select)
         log.info(f"Selected annual income: {selected_annual_income}")
         simple_actions.element_send_key(self.profile.phone_number_input, user.phone)
@@ -71,15 +83,6 @@ class TestFlowRegister(BaseClass):
         log.info(f"Homewoner: {homeowner}")
         simple_actions.element_click(self.profile.submit_btn)
         log.info("Send data")
-        wait_utils.wait_element(self.profile.thank_you_ok_btn)
-        simple_actions.element_click(self.profile.thank_you_ok_btn)
-        log.info("Choose a random profile")
-        selected_profile = random_actions_utils.click_random_element_with_class(self.profile.profiles_container, 'resource-image-card')
-        profile_name = selected_profile.find_element(By.TAG_NAME, 'H3')
-        log.info(f"Profile selected: {profile_name}")
-        profile_selector = (By.ID, selected_profile.get_attribute('data-modal-id'))
-        selected_dialog = simple_actions.get_element(profile_selector)
-        selected_dialog.find_element(By.TAG_NAME, 'button').click()
         wait_utils.wait_element(self.profile.thank_you_ok_btn)
         simple_actions.element_click(self.profile.thank_you_ok_btn)
         log.attach_log()

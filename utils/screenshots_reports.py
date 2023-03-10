@@ -3,6 +3,9 @@ import os
 from datetime import datetime
 
 class ScreenshotsReports:
+
+    def __init__(self, driver):
+        self.driver = driver
     
     def add_screenshot(self, test_name, screenshot_name):
         file_name = f'reports/{test_name}{datetime.now().strftime("%d-%m-%Y_%H-%M-%S")}.png'

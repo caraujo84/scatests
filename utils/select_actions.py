@@ -3,6 +3,9 @@ from selenium.webdriver.common.by import By
 import random
 
 class SelectActions:
+
+    def __init__(self, driver):
+        self.driver = driver
     
     def select_option_by_visible_text(self, element, text):
         Select(self.driver.find_element(*element)).select_by_visible_text(text)

@@ -1,7 +1,7 @@
 import allure
 from datetime import datetime
 
-class Logger():
+class Logger:
 
     def __init__(self):
         self.log = ''

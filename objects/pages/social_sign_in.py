@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
-from objects.components.utility_nav import UtilityNav
 
-class LogIn():
+class SocialSignIn():
 
     def __init__(self, driver):
         self.driver = driver

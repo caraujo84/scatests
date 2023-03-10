@@ -22,6 +22,10 @@ class TestHeader(BaseClass):
         log = self.get_logger()
         simple_actions = self.get_simple_actions()
         screen_utils = self.get_screenshot_utils()
+
+        custom_utils = self.get_custom_utils()
+        custom_utils.pass_site_protection(log)
+        
         error_count = 0
         
         menu_expected_titles = ['Personal', 'Business', 'Articles', 'Locations']

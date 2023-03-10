@@ -4,6 +4,9 @@ from selenium.webdriver.support.ui import Select
 
 class RandomActions:
 
+    def __init__(self, driver):
+        self.driver = driver
+
     def select_random_option(self, element):
         """
         To select a random option from a select
@@ -22,14 +25,5 @@ class RandomActions:
         radio_buttons = container.find_elements(By.TAG_NAME, 'input')
         selected_option = random.choice(radio_buttons)
         selected_option.click()
-        return selected_option.text
+        return selected_option.accessible_name
     
-    def click_random_element_with_class(self, element, element_class):
-        """
-        To choose a random button with a specific class from a container element
-        """
-        container = self.driver.find_element(*element)
-        elements = container.find_elements(By.CLASS_NAME, element_class)
-        selected_element = random.choice(elements)
-        selected_element.click()
-        return selected_element
