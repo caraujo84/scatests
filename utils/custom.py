@@ -1,4 +1,3 @@
-from utils.logger import Logger
 from utils.simple_actions import SimpleActions
 from objects.pages.site_protection import SiteProtection
 
