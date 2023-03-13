@@ -13,12 +13,12 @@ class TestFooter(BaseClass):
         self.driver = driver
         self.initialize_objects()
 
-    @pytest.fixture
+    @pytest.fixture(autouse=True)
     def auto_init(self):
         self.initialize_objects()
 
     @allure.feature('footer')
-    def test_footer_subscribe_form(self, auto_init, user=None):
+    def test_footer_subscribe_form(self, user=None):
 
         log = self.get_logger()
         simple_actions = self.get_simple_actions()

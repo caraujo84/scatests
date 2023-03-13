@@ -19,12 +19,12 @@ class TestFlowRegister(BaseClass):
         self.driver = driver
         self.initialize_objects()
 
-    @pytest.fixture
+    @pytest.fixture(autouse=True)
     def auto_init(self):
         self.initialize_objects()
         
     @allure.story('register_flow')
-    def test_register(self, auto_init, user = None, review_name = False):
+    def test_register(self, user = None, review_name = False):
         
         log = self.get_logger()
         simple_actions = self.get_simple_actions()

@@ -13,22 +13,22 @@ class TestSuiteSubscribeLogin(BaseClass):
         self.test_flow_register = TestFlowRegister()
         self.test_flow_register.manual_init(self.driver)
 
-    @pytest.fixture
+    @pytest.fixture(autouse=True)
     def auto_init(self):
         self.initialize_objects()
 
-    @allure.step
+    @allure.step('Step Subscribe')
     def step_subscribe(self, user):
         allure.dynamic.parameter('Subscribe User', user.__str__())
-        self.test_footer.test_footer_subscribe_form(None, user)
+        self.test_footer.test_footer_subscribe_form(user)
 
-    @allure.step
+    @allure.step('Step Login')
     def step_login(self, user):
         allure.dynamic.parameter('Login User', user.__str__())
-        self.test_flow_register.test_register(None, user, True)
+        self.test_flow_register.test_register(user, True)
 
     @allure.epic('subscribe_login_suite')
-    def test_subscribe_login(self, auto_init):
+    def test_subscribe_login(self):
 
         log = self.get_logger()
         fake_user_utils = self.get_fake_user_utils()

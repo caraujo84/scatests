@@ -15,6 +15,9 @@ class SimpleActions:
     def get_element(self, element):
         return self.driver.find_element(*element)
     
+    def get_elements(self, element):
+        return self.driver.find_elements(*element)
+    
     def element_click(self, element):
         self.driver.find_element(*element).click()
     

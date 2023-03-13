@@ -12,12 +12,12 @@ class TestHeader(BaseClass):
         self.driver = driver
         self.initialize_objects()
         
-    @pytest.fixture
+    @pytest.fixture(autouse=True)
     def auto_init(self):
         self.initialize_objects()
 
     @allure.feature('header')
-    def test_header_menu(self, auto_init):
+    def test_header_menu(self):
 
         log = self.get_logger()
         simple_actions = self.get_simple_actions()
@@ -29,12 +29,7 @@ class TestHeader(BaseClass):
         error_count = 0
         
         menu_expected_titles = ['Personal', 'Business', 'Articles', 'Locations']
-        menu_actual_titles = [
-            simple_actions.get_element(self.header.menu_personal_item).text,
-            simple_actions.get_element(self.header.menu_business_item).text,
-            simple_actions.get_element(self.header.menu_articles_item).text,
-            simple_actions.get_element(self.header.menu_locations_item).text,
-        ]
+        menu_actual_titles = [menu_item.text for menu_item in simple_actions.get_elements(self.header.menu_items)]
 
         log.info('Start reviewing header menu titles')
         for expected_title, actual_title in zip(menu_expected_titles, menu_actual_titles):
