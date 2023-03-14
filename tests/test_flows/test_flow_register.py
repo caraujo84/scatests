@@ -1,6 +1,5 @@
 import allure
 import pytest
-from selenium.webdriver.common.by import By
 from core.base_class import BaseClass
 from objects.pages.home_page import HomePage
 from objects.pages.social_sign_in import SocialSignIn
@@ -24,6 +23,7 @@ class TestFlowRegister(BaseClass):
         self.initialize_objects()
         
     @allure.story('register_flow')
+    @allure.title('Register a user')
     def test_register(self, user = None, review_name = False):
         
         log = self.get_logger()
@@ -45,6 +45,7 @@ class TestFlowRegister(BaseClass):
         simple_actions.element_click(self.home.utility_nav.log_In)
         wait_utils.wait_element(self.login.socialSignInBtn)
         log.info('Login Page Loaded')
+        screen_utils.add_screenshot('register_flow', 'Login Page Loaded')
         log.info('Click on Social Sign in Button')
         simple_actions.element_click(self.login.socialSignInBtn)
         wait_utils.wait_element(self.socialSignIn.email_input)
@@ -53,10 +54,12 @@ class TestFlowRegister(BaseClass):
         simple_actions.element_send_key(self.socialSignIn.email_input, user.email)
         log.info(f"Enter password: @Verndale321!")
         simple_actions.element_send_key(self.socialSignIn.password_input, "@Verndale321!")
+        screen_utils.add_screenshot('register_flow', 'Enter data in form')
         log.info("Click login")
         simple_actions.element_click(self.socialSignIn.login_btn)
         wait_utils.wait_element(self.socialSignIn.continue_btn)
         log.info("Permissions Page Loaded")
+        screen_utils.add_screenshot('register_flow', 'Permissions Page Loaded')
         continue_btn_text = simple_actions.get_element(self.socialSignIn.continue_btn).text
         complete_name = f'{user.first_name} {user.last_name}'
         
@@ -81,6 +84,7 @@ class TestFlowRegister(BaseClass):
         log.info(f"Has children: {children}")
         homeowner = random_actions_utils.select_random_radio_button(self.profile.homeowner_radio_buttons)
         log.info(f"Homewoner: {homeowner}")
+        screen_utils.add_screenshot('register_flow', 'Enter data in profiel form')
         simple_actions.element_click(self.profile.submit_btn)
         log.info("Send data")
         wait_utils.wait_element(self.profile.thank_you_ok_btn)

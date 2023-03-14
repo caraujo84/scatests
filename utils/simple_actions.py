@@ -37,3 +37,6 @@ class SimpleActions:
 
     def switch_to_default_content(self):
         self.driver.switch_to.default_content()
+
+    def reload_page(self):
+        self.driver.refresh()

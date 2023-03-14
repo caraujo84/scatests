@@ -19,15 +19,14 @@ class TestSuiteSubscribeLogin(BaseClass):
 
     @allure.step('Step Subscribe')
     def step_subscribe(self, user):
-        allure.dynamic.parameter('Subscribe User', user.__str__())
         self.test_footer.test_footer_subscribe_form(user)
 
     @allure.step('Step Login')
     def step_login(self, user):
-        allure.dynamic.parameter('Login User', user.__str__())
         self.test_flow_register.test_register(user, True)
 
     @allure.epic('subscribe_login_suite')
+    @allure.title('Subscribe and Login')
     def test_subscribe_login(self):
 
         log = self.get_logger()

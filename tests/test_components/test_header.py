@@ -17,6 +17,7 @@ class TestHeader(BaseClass):
         self.initialize_objects()
 
     @allure.feature('header')
+    @allure.title('Header menu')
     def test_header_menu(self):
 
         log = self.get_logger()
