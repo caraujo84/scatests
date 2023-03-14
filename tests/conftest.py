@@ -9,6 +9,7 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 driver = None
 
+
 def pytest_addoption(parser):
     parser.addoption(
         "--browser_name", action="store", default="chrome"
@@ -31,7 +32,7 @@ def setup(request):
 
     driver.get("https://infinitybank-optimizely.verndale.com/")
     driver.maximize_window()
-       
+
     request.cls.driver = driver
     yield
     driver.close()
