@@ -4,7 +4,7 @@ This is a base project with the structure needed to run any QA automation in any
 
 ## Project Structure
 
-- core: Here is the base class
+- core: Here is the base class and the urls for the tests.
 - models: Here you can add all the models that you are going to need to your tests. For this base project we have added a user model in order to generate fake users.
 - objects: Inside this folder you will find 2 more folders:
     - components: Here you will add your component classes with their elements.
@@ -42,7 +42,20 @@ Something to take into consideration is that you can add allure settings to your
 ```pytest tests/test_main.py --alluredir=./reports --allure-epics epic_name```
 
 You can also combine them:
+
 ```pytest tests/test_main.py --alluredir=./reports --allure-features feature_name_1, feature_name_2 --allure-stories story_name```
+
+Also, you can specify the browser for the tests by using this command:
+
+```pytest tests/test_main.py --alluredir=./reports --browser_name <browser>```
+
+The browser can be: chrome, firefox, edge.
+
+Finally, you can also run tests in parallel by using ```-n <num>``` like in this command used to run 3 tests in parallel.
+
+```pytest tests/test_main.py --alluredir=./reports -n 3```
+
+If you want to run all tests in parallel you will need to send ```-n auto```
 
 ## Create Allure Report
 

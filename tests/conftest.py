@@ -6,13 +6,14 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from core.urls import URLS
 
 driver = None
 
 
 def pytest_addoption(parser):
     parser.addoption(
-        "--browser_name", action="store", default="chrome"
+        "--browser_name", action="store", default="chrome", choices=("chrome", "firefox", "edge")
     )
 
 
@@ -30,7 +31,7 @@ def setup(request):
         driver = webdriver.Chrome(service=ChromeService(
             ChromeDriverManager().install()))
 
-    driver.get("site url")
+    driver.get(URLS.site_url)
     driver.maximize_window()
 
     request.cls.driver = driver
