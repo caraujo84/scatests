@@ -4,3 +4,4 @@ webdriver_manager==3.8.5
 pytest_html==3.2.0
 allure_pytest==2.13.0
 requests==2.28.2
+pytest_xdist==3.2.1
