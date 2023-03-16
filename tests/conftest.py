@@ -13,7 +13,10 @@ driver = None
 
 def pytest_addoption(parser):
     parser.addoption(
-        "--browser_name", action="store", default="chrome", choices=("chrome", "firefox", "edge")
+        "--browser-name", action="store", default="chrome", choices=("chrome", "firefox", "edge")
+    )
+    parser.addoption(
+        "--headless", action="store", default="false", choices=("true", "false")
     )
 
 
@@ -22,14 +25,26 @@ def setup(request):
     global driver
     browser_name = request.config.getoption("browser_name")
     if browser_name == "firefox":
+        options = webdriver.FirefoxOptions()
+        if request.config.getoption("headless") == 'true':
+            options.add_argument("--headless")
+        options.add_argument("--window-size=1920,1080")
         driver = webdriver.Firefox(
             service=FirefoxService(GeckoDriverManager().install()))
     elif browser_name == "edge":
+        options = webdriver.EdgeOptions()
+        if request.config.getoption("headless") == 'true':
+            options.add_argument("--headless")
+        options.add_argument("--window-size=1920,1080")
         driver = webdriver.Edge(service=EdgeService(
             EdgeChromiumDriverManager().install()))
     else:
+        options = webdriver.ChromeOptions()
+        if request.config.getoption("headless") == 'true':
+            options.add_argument("--headless")
+        options.add_argument("--window-size=1920,1080")
         driver = webdriver.Chrome(service=ChromeService(
-            ChromeDriverManager().install()))
+            ChromeDriverManager().install()), options=options)
 
     driver.get(URLS.site_url)
     driver.maximize_window()

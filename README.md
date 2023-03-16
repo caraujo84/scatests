@@ -51,6 +51,12 @@ Also, you can specify the browser for the tests by using this command:
 
 The browser can be: chrome, firefox, edge.
 
+In addition, you can specify if you want to run de test in headless mode (so no window is opened) with this command:
+
+```pytest tests/test_main.py --alluredir=./reports --headless true```
+
+By default this option is in false.
+
 Finally, you can also run tests in parallel by using ```-n <num>``` like in this command used to run 3 tests in parallel.
 
 ```pytest tests/test_main.py --alluredir=./reports -n 3```
