@@ -30,7 +30,7 @@ def setup(request):
         driver = webdriver.Chrome(service=ChromeService(
             ChromeDriverManager().install()))
 
-    driver.get("https://infinitybank-optimizely.verndale.com/")
+    driver.get("site url")
     driver.maximize_window()
 
     request.cls.driver = driver
