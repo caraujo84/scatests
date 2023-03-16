@@ -1,3 +1,4 @@
-reports
+reports/*
+!reports/README.md
 __pycache__
 /.idea
