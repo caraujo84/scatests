@@ -8,6 +8,7 @@ from utils.random_actions import RandomActions
 from utils.screenshot_actions import ScreenshotActions
 from utils.select_actions import SelectActions
 from utils.simple_actions import SimpleActions
+from utils.switch_actions import SwitchActions
 from utils.wait_actions import WaitActions
 
 
@@ -16,7 +17,7 @@ class BaseClass:
 
     def get_logger(self):
         return Logger()
-    
+
     def get_fake_user_utils(self):
         return FakeUser()
 
@@ -34,6 +35,9 @@ class BaseClass:
 
     def get_random_actions(self):
         return RandomActions(self.driver)
+    
+    def get_switch_actions(self):
+        return SwitchActions(self.driver)
 
     def get_image_actions(self):
         return ImageActions(self.driver)
