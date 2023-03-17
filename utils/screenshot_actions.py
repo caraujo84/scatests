@@ -1,10 +1,11 @@
-import allure
 import os
 import pathlib
 from datetime import datetime
 
+import allure
 
-class ScreenshotsReports:
+
+class ScreenshotActions:
 
     def __init__(self, driver):
         self.driver = driver

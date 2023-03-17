@@ -3,7 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 
 
-class WaitEvents:
+class WaitActions:
 
     def __init__(self, driver):
         self.driver = driver
