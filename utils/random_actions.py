@@ -29,3 +29,25 @@ class RandomActions:
         selected_option = random.choice(radio_buttons)
         selected_option.click()
         return selected_option.accessible_name
+
+    def random_click(self, elements_identifier):
+        """
+        Random click an element from the elements_identifier (this identifier should return more than one element)
+        """
+        simple_actions = SimpleActions(self.driver) 
+        elements = simple_actions.get_elements(elements_identifier)
+        element = elements[random.randint(0,len(elements)-1)]
+        element_name = element.get_attribute('text').replace("\n", "").replace(" ", "").strip()
+        element.click()
+        return element_name
+        
+    def random_hover(self, elements_identifier):
+        """
+        Random hover an element from the elements_identifier (this identifier should return more than one element)
+        """
+        simple_actions = SimpleActions(self.driver)
+        actions = ActionChains(self.driver)
+        elements = simple_actions.get_elements(elements_identifier)
+        element = elements[random.randint(1,len(elements)-1)]
+        actions.move_to_element(element).perform()
+        return element
