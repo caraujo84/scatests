@@ -17,3 +17,11 @@ class SwitchActions:
             self.driver.switch_to.window(win)
             if url in self.driver.current_url:
                 break
+
+    def switch_to_new_tab(self):
+        self.driver.switch_to.new_window('tab')
+    
+    def close_current_tab(self):
+        self.driver.close()
+        windows = self.driver.window_handles
+        self.driver.switch_to.window(windows[len(windows)-1])

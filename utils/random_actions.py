@@ -2,6 +2,8 @@ import random
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from utils.simple_actions import SimpleActions
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class RandomActions:
@@ -48,6 +50,6 @@ class RandomActions:
         simple_actions = SimpleActions(self.driver)
         actions = ActionChains(self.driver)
         elements = simple_actions.get_elements(elements_identifier)
-        element = elements[random.randint(1,len(elements)-1)]
+        element = elements[random.randint(0,len(elements)-1)]
         actions.move_to_element(element).perform()
         return element

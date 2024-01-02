@@ -5,9 +5,7 @@ from google.auth.transport.requests import Request
 import pickle
 import os.path
 import base64
-import email
 from bs4 import BeautifulSoup
-import json
 import datetime
 import time
 
@@ -30,7 +28,7 @@ class Gmail:
         Passes the subject and receiver email as parameters to search_messages method.
     """
 
-    def __init__(self,driver, log):
+    def __init__(self, log):
         """ Constructor
         """
         self.user_id = 'me'
@@ -58,8 +56,57 @@ class Gmail:
         """      
         search_string = operator+":"+element_to_find + " after:" + str(datetime.date.today()).replace("-", "/") if date else operator+":"+element_to_find
         email_html = self.__search_messages(search_string)
+        if(email_html != None):
+            return email_html            
+        else:
+            self.log.warning('Email not found on INBOX. Trying to find it on SPAM ...')
+            email_html = self.__search_message_by_operator_in_spam(operator, element_to_find, date = True)
+            return email_html
+
+    def __search_message_by_operator_in_spam(self, operator, element_to_find, date = True):
+        """Allows to look for emails using an operator.
+
+        Parameters
+        ----------
+        operator : str,
+            can be: 'subject', 'from', 'to', 
+             'before' (get last email before a certain M/D/YYYY date format).
+        element_to_find : str,
+            can be the text of the subject, email of sender or receiver, and dates.
+        date : bool, optional: 
+            True > to check only today's emails
+             | False > to check in all emails
+
+        Returns
+        -------
+        str,
+            HTML of the email if found, else None.
+        """
+        search_string = operator+":"+element_to_find + " after:" + str(datetime.date.today()).replace("-", "/") if date else operator+":"+element_to_find
+        email_html = self.__search_messages(search_string, labelId='SPAM')
         return email_html
-    
+
+    def __search_messages_by_subject_and_receiver_in_spam(self, subject_text, receiver_email, date = True):
+        """Method used to find an email by its subject and receiver but in the SPAM folder.
+
+        Parameters
+        ----------
+        subject_text : str,
+            text of the subject in email.
+        receiver_email : str,
+            email address of the receiver.
+        date : bool, optional
+            True > to check only today's emails 
+            | False > to check in all emails
+
+        Returns
+        -------
+        str,
+            HTML of the email if found, else None.
+        """
+        search_string = "subject:" + subject_text + " " + "to:" + receiver_email + " after:" + str(datetime.date.today()).replace("-", "/") if date else "subject:" + subject_text + " " + "to:" + receiver_email
+        email_html = self.__search_messages(search_string,  labelId='SPAM')
+        return email_html
 
     def search_messages_by_subject_and_receiver(self, subject_text, receiver_email, date = True):
         """Allows to get an email using the 'subject' and 'to' operators in query.
@@ -67,7 +114,7 @@ class Gmail:
         Parameters
         ----------
         subject_text : str, 
-            texto of the subject in email
+            text of the subject in email
         receiver_email : str, 
             email address of the receiver.
         date : bool,
@@ -81,7 +128,12 @@ class Gmail:
         """  
         search_string = "subject:" + subject_text + " " + "to:" + receiver_email + " after:" + str(datetime.date.today()).replace("-", "/") if date else "subject:" + subject_text + " " + "to:" + receiver_email
         email_html = self.__search_messages(search_string)
-        return email_html
+        if(email_html != None):
+            return email_html            
+        else:
+            self.log.warning('Email not found on INBOX. Trying to find it on SPAM ...')
+            email_html = self.__search_messages_by_subject_and_receiver_in_spam(subject_text, receiver_email, date = True)
+            return email_html
     
     def __get_service(self, credentials_path = 'C:/Users/karen.arias/Documents/Automation Tests/credentials.json'):
         """Connects to the API using Google Cloud credentials.
@@ -117,7 +169,6 @@ class Gmail:
         except Exception as e:
             self.log.error("Error getting the service.")
             self.log.error(e)
-        
 
     def __search_messages(self, search_string, labelId = 'INBOX', tries = 3):
             """Retrieves the id of an email based on a search query
@@ -142,6 +193,7 @@ class Gmail:
             """
               
             try:
+                self.log.info(f"Looking for emails on '{labelId}'")
                 number_results = 0
                 while(tries>0 and number_results == 0):
                     search_id =  self.service.users().messages().list(userId = self.user_id, maxResults = 10, labelIds=[labelId],  q=search_string).execute()
@@ -165,7 +217,6 @@ class Gmail:
                 self.log.error("Error searching for the email.")
                 self.log.error(e)
                 
-
     def __get_html(self, message_id ):
         """This method receives the email id found by the query, gets the email data, and parse it to html.
         Parameters

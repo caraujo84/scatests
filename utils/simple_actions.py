@@ -30,5 +30,15 @@ class SimpleActions:
         actions = ActionChains(self.driver)
         actions.move_to_element(elements).perform()
 
+    def move_to_selenium_element(self, element):
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+
     def reload_page(self):
         self.driver.refresh()
+
+    def scroll_to_top(self):
+        self.driver.execute_script("window.scrollTo(0, 0);")
+
+    def scroll_to_bottom(self):
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
