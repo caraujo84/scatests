@@ -8,6 +8,7 @@ import base64
 from bs4 import BeautifulSoup
 import datetime
 import time
+import pathlib
 
 
 class Gmail:
@@ -135,7 +136,7 @@ class Gmail:
             email_html = self.__search_messages_by_subject_and_receiver_in_spam(subject_text, receiver_email, date = True)
             return email_html
     
-    def __get_service(self, credentials_path = 'C:/Users/karen.arias/Documents/Automation Tests/credentials.json'):
+    def __get_service(self):
         """Connects to the API using Google Cloud credentials.
 
         Parameters
@@ -158,6 +159,8 @@ class Gmail:
                 if creds and creds.expired and creds.refresh_token:
                     creds.refresh(Request())
                 else:
+                    current_directory = pathlib.Path(__file__).parent.parent.resolve()
+                    credentials_path = f'{current_directory}\\gmail_credentials.json'
                     flow = InstalledAppFlow.from_client_secrets_file(credentials_path, SCOPES)
                     creds = flow.run_local_server(port=0)
                 with open('token.pickle', 'wb') as token:
