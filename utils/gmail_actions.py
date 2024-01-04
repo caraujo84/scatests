@@ -32,8 +32,8 @@ class Gmail:
         """ Constructor
         """
         self.user_id = 'me'
-        self.service = self.__get_service()
         self.log = log
+        self.service = self.__get_service()
  
     def search_message_by_operator(self, operator, element_to_find, date = True):
         """Allows to look for emails using an operator.
