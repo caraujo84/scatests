@@ -57,7 +57,7 @@ class Gmail:
         """      
         search_string = operator+":"+element_to_find + " after:" + str(datetime.date.today()).replace("-", "/") if date else operator+":"+element_to_find
         email_html = self.__search_messages(search_string)
-        if(email_html != None):
+        if(email_html is not None):
             return email_html            
         else:
             self.log.warning('Email not found on INBOX. Trying to find it on SPAM ...')
@@ -129,7 +129,7 @@ class Gmail:
         """  
         search_string = "subject:" + subject_text + " " + "to:" + receiver_email + " after:" + str(datetime.date.today()).replace("-", "/") if date else "subject:" + subject_text + " " + "to:" + receiver_email
         email_html = self.__search_messages(search_string)
-        if(email_html != None):
+        if(email_html is not None):
             return email_html            
         else:
             self.log.warning('Email not found on INBOX. Trying to find it on SPAM ...')
