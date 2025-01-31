@@ -4,9 +4,8 @@ import allure
 
 
 class Logger:
-
     def __init__(self):
-        self.log = ''
+        self.log = ""
         self.warning_count = 0
         self.error_count = 0
 
@@ -26,7 +25,7 @@ class Logger:
         self.error_count += 1
 
     def clear_log(self):
-        self.log = ''
+        self.log = ""
         self.warning_count = 0
         self.error_count = 0
 
@@ -35,11 +34,11 @@ class Logger:
         self.clear_log()
 
     def new_line(self):
-        return '''<br>
+        return """<br>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               '''
+               """
 
     def get_warning_count(self):
         return self.warning_count

@@ -2,6 +2,8 @@ import pytest
 
 from utils.custom import Custom
 from utils.fake_user import FakeUser
+from utils.file_actions import FileActions
+from utils.gmail_actions import Gmail
 from utils.image_actions import ImageActions
 from utils.logger import Logger
 from utils.random_actions import RandomActions
@@ -10,13 +12,10 @@ from utils.select_actions import SelectActions
 from utils.simple_actions import SimpleActions
 from utils.switch_actions import SwitchActions
 from utils.wait_actions import WaitActions
-from utils.file_actions import FileActions
-from utils.gmail_actions import Gmail
 
 
 @pytest.mark.usefixtures("setup")
 class BaseClass:
-
     def get_logger(self):
         return Logger()
 
@@ -24,20 +23,20 @@ class BaseClass:
         return FakeUser()
 
     def get_wait_actions(self):
-        return WaitActions(self.driver) 
+        return WaitActions(self.driver)
 
     def get_screenshot_actions(self):
-        return ScreenshotActions(self.driver) 
+        return ScreenshotActions(self.driver)
 
     def get_simple_actions(self):
-        return SimpleActions(self.driver) 
+        return SimpleActions(self.driver)
 
     def get_select_actions(self):
-        return SelectActions(self.driver) 
+        return SelectActions(self.driver)
 
     def get_random_actions(self):
-        return RandomActions(self.driver) 
-    
+        return RandomActions(self.driver)
+
     def get_switch_actions(self):
         return SwitchActions(self.driver)
 
@@ -45,10 +44,10 @@ class BaseClass:
         return ImageActions(self.driver)
 
     def get_custom_utils(self):
-        return Custom(self.driver) 
-    
+        return Custom(self.driver)
+
     def get_file_actions(self):
-        return FileActions(self.driver) 
-    
+        return FileActions(self.driver)
+
     def get_gmail_actions(self, log):
-        return Gmail(self.driver, log) 
+        return Gmail(self.driver, log)
